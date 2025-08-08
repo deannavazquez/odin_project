@@ -1,24 +1,12 @@
-# Implement a Caesar cipher that takes in a string and the shift factor and then outputs the modified string using a right shift:
-
-#   > caesar_cipher("What a string!", 5)
-#   => "Bmfy f xywnsl!"
-
 def caesar_cipher(text, shift)
-  result = ""
+  text.chars.map { |char| shift_char(char, shift) }.join
+end
 
-  text.each_char do |char|
-    if char >= 'a' && char <= 'z' 
-      base = 'a'.ord
-      shifted = ((char.ord - base + shift) % 26 ) + base
-      result += shifted.chr
-    elsif char >= 'A' && char <= 'Z'
-      base = 'A'.ord
-      shifted = ((char.ord - base + shift) % 26) + base
-      result += shifted.chr
-    else
-      result += char
-    end
+def shift_char(char, shift)
+  if char =~ /[A-Za-z]/
+    base = char =~ /[A-Z]/ ? 'A'.ord : 'a'.ord
+    (((char.ord - base + shift) % 26) + base).chr
+  else
+    char
   end
-
-  return result
 end
